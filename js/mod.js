@@ -7,18 +7,18 @@ let modInfo = {
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (10), // Used for hard resets and new players
-	offlineLimit: 1,  // In hours
+	initialStartPoints: new Decimal (0), // Used for hard resets and new players
+	offlineLimit: 0,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "0.0.1",
+	name: "IDK",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
+	<h3>v0.0.1</h3><br>
 		- Added things.<br>
 		- Added stuff.`
 
@@ -39,10 +39,11 @@ function canGenPoints(){
 
 // Calculate points/sec!
 function getPointGen() {
+	if (hasUpgrade('p', 11)) gain = gain.times(2)
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(1)
+	let gain = new Decimal(2)
 	return gain
 }
 
@@ -56,7 +57,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e280000000"))
+	return player.points.gte(new Decimal("e100"))
 }
 
 
@@ -70,7 +71,7 @@ var backgroundStyle = {
 
 // You can change this if you have things that can be messed up by long tick lengths
 function maxTickLength() {
-	return(3600) // Default is 1 hour which is just arbitrarily large
+	return(360) // Default is 1 hour which is just arbitrarily large
 }
 
 // Use this if you need to undo inflation from an older version. If the version is older than the version that fixed the issue,
